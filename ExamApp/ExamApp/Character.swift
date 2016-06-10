@@ -14,18 +14,18 @@ struct Character {
     //name, birth_year, height, mass
     let name: String
     let birth_year: String
-    let height: Int
-    let mass: Int
+    // Set as Int32 instead of Int because of NSString casting below
+    let height: Int32
+    let mass: Int32
     
     init(dict: Dictionary<String, AnyObject>) {
         
         //Base info
         name = dict["name"] as! String
         birth_year = dict["birth_year"] as! String
-        //height = dict["height"] as! Int
-        height = 0
-        //mass = dict["mass"] as! Int
-        mass = 0
+        // Requires NSString casting because the JSON seems to return String
+        height = (dict["height"] as! NSString).intValue
+        mass = (dict["mass"] as! NSString).intValue
     }
 }
 
