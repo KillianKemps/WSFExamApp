@@ -66,7 +66,6 @@ extension FirstViewController : UITableViewDelegate,UITableViewDataSource {
         let character = charactersArray[indexPath.row]
         cell.nameLabel.text = character.name
         
-        //print("row \(indexPath.row)")
         return cell
         
     }
