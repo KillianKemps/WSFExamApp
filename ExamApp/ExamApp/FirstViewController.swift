@@ -14,9 +14,13 @@ class FirstViewController: UIViewController {
     var charactersOffset: Int {
         return charactersArray.count
     }
+    
+    @IBOutlet weak var characterTV: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        characterTV.estimatedRowHeight = 200.0
+        characterTV.rowHeight = UITableViewAutomaticDimension
         displayCharacters()
     }
     
@@ -28,9 +32,7 @@ class FirstViewController: UIViewController {
             
             switch response.result {
             case .Success:
-                print("case success")
                 if let dict = response.result.value as? Dictionary<String, AnyObject> {
-                    print("the dict, ", dict)
                         
                     if let array = dict["results"] as? Array<AnyObject>  {
                         
@@ -39,7 +41,7 @@ class FirstViewController: UIViewController {
                         
                         print("charaters:", self.charactersArray)
                         
-                        //self.comicTV.reloadData()
+                        self.characterTV.reloadData()
                         
                     }
                 }
@@ -49,8 +51,29 @@ class FirstViewController: UIViewController {
             }
         })
     }
+}
 
-
-
+extension FirstViewController : UITableViewDelegate,UITableViewDataSource {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return charactersArray.count + 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("CharacterCell", forIndexPath: indexPath) as! CharacterCell
+        
+        //let character = charactersArray[indexPath.row]
+        cell.nameLabel.text = "John Doe test"
+        
+        //print("row \(indexPath.row)")
+        return cell
+        
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 }
 

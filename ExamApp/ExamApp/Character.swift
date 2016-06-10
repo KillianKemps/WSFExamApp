@@ -14,6 +14,7 @@ struct Character {
     //name, birth_year, height, mass
     let name: String
     let birth_year: String
+
     // Set as Int32 instead of Int because of NSString casting below
     let height: Int32
     let mass: Int32
@@ -23,6 +24,7 @@ struct Character {
         //Base info
         name = dict["name"] as! String
         birth_year = dict["birth_year"] as! String
+
         // Requires NSString casting because the JSON seems to return String
         height = (dict["height"] as! NSString).intValue
         mass = (dict["mass"] as! NSString).intValue
@@ -32,9 +34,7 @@ struct Character {
 extension Character {
     static func getRemoteCharacters(offset: Int, completionHandler: Response<AnyObject, NSError> -> Void) {
         let param: [String : AnyObject] = ["format" : "json"]
-        
-        print("Gonna send request")
-        
+
         Alamofire.request(.GET, "http://swapi.co/api/people", parameters: param).responseJSON { response in
             completionHandler(response)
         }
