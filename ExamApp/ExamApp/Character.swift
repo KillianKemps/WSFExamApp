@@ -22,22 +22,20 @@ struct Character {
         //Base info
         name = dict["name"] as! String
         birth_year = dict["birth_year"] as! String
-        height = dict["height"] as! Int
-        mass = dict["mass"] as! Int
+        //height = dict["height"] as! Int
+        height = 0
+        //mass = dict["mass"] as! Int
+        mass = 0
     }
 }
 
 extension Character {
-    static func getRemoteComics(offset: Int, completionHandler: Response<AnyObject, NSError> -> Void) {
-        let apiKey = "c3901f9b2fb11e2322853b3ede27f438"
-        let ts = "testtest"
-        let hash = "1d312b3f93ad2dbbd2ab9af0a125b73a"
+    static func getRemoteCharacters(offset: Int, completionHandler: Response<AnyObject, NSError> -> Void) {
+        let param: [String : AnyObject] = ["format" : "json"]
         
-        let param: [String : AnyObject] = ["apikey" : apiKey, "hash" : hash, "ts" : ts, "offset": offset]
+        print("Gonna send request")
         
-        
-        Alamofire.request(.GET, "http://gateway.marvel.com/v1/public/comics", parameters: param).responseJSON { response in
-            
+        Alamofire.request(.GET, "http://swapi.co/api/people", parameters: param).responseJSON { response in
             completionHandler(response)
         }
     }

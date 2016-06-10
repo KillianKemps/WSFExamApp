@@ -9,16 +9,47 @@
 import UIKit
 
 class FirstViewController: UIViewController {
+    
+    var charactersArray: [Character] = []
+    var charactersOffset: Int {
+        return charactersArray.count
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        displayCharacters()
+    }
+    
+    func displayCharacters() {
+        
+        print("begin display")
+        
+        Character.getRemoteCharacters (charactersOffset, completionHandler: { (response) in
+            
+            switch response.result {
+            case .Success:
+                print("case success")
+                if let dict = response.result.value as? Dictionary<String, AnyObject> {
+                    print("the dict, ", dict)
+                        
+                    if let array = dict["results"] as? Array<AnyObject>  {
+                        
+                        self.charactersArray += array.map
+                            { Character(dict: $0 as! [String: AnyObject]) }
+                        
+                        print("charaters:", self.charactersArray)
+                        
+                        //self.comicTV.reloadData()
+                        
+                    }
+                }
+                
+            case .Failure(let error):
+                print(error)
+            }
+        })
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
 
 }
