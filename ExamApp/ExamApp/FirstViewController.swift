@@ -56,15 +56,15 @@ class FirstViewController: UIViewController {
 extension FirstViewController : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return charactersArray.count + 1
+        return charactersArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CharacterCell", forIndexPath: indexPath) as! CharacterCell
         
-        //let character = charactersArray[indexPath.row]
-        cell.nameLabel.text = "John Doe test"
+        let character = charactersArray[indexPath.row]
+        cell.nameLabel.text = character.name
         
         //print("row \(indexPath.row)")
         return cell
